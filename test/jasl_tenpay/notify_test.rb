@@ -32,16 +32,16 @@ class JaslTenpay::NotifyTest < Test::Unit::TestCase
       :notify_id => '123456789012345678901234567890',
       :sign => '9E3178005EF2DFF87348E00889765FF0'
     }
-    @url = "https://gw.tenpay.com/gateway/simpleverifynotifyid.xml?input_charset=UTF-8&partner=#{JaslTenpay.pid}&notify_id=123456789012345678901234567890&sign=E040AFBCBC409EA0C62CF0F11CF0BAA4"
+    @url = "https://gw.tenpay.com/gateway/simpleverifynotifyid.xml?input_charset=UTF-8&partner=1900000113&notify_id=123456789012345678901234567890&sign=E040AFBCBC409EA0C62CF0F11CF0BAA4"
   end
 
   def test_verify_notify_when_success
     FakeWeb.register_uri(:get, @url, :body => SUCCESS_RETURN)
-    assert JaslTenpay::Notify.verify?(@options)
+    assert JaslTenpay::Notify.verify?(@options, '1900000113', 'e82573dc7e6136ba414f2e2affbe39fa')
   end
 
   def test_verify_notify_when_fail
     FakeWeb.register_uri(:get, @url, :body => FAIL_RETURN)
-    assert !JaslTenpay::Notify.verify?(@options)
+    assert !JaslTenpay::Notify.verify?(@options, '1900000113', 'e82573dc7e6136ba414f2e2affbe39fa')
   end
 end

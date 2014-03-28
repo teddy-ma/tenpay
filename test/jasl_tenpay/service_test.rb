@@ -11,6 +11,6 @@ class JaslTenpay::ServiceTest < Test::Unit::TestCase
         :total_fee => 1,
         :spbill_create_ip => '127.0.0.1',
     }
-    assert_not_nil JaslTenpay::Service.create_interactive_mode_url(options)
+    assert_not_nil JaslTenpay::Service.create_interactive_mode_url(options, '1900000113', 'e82573dc7e6136ba414f2e2affbe39fa')
   end
 end

@@ -40,13 +40,6 @@ $ bundle
 
 ## Usage
 
-### Config
-
-```ruby
-JaslTenpay.pid = 'YOUR_PID'
-JaslTenpay.key = 'YOUR_KEY'
-```
-
 ### Generate payment url
 
 e.g:
@@ -62,7 +55,7 @@ options = {
   :notify_url        => 'YOUR_ORDER_NOTIFY_URL'  # http://knewone.com/orders/1/tenpay_notify
 }
 
-JaslTenpay::Service.create_interactive_mode_url(options)
+JaslTenpay::Service.create_interactive_mode_url(options, pid, jkey)
 # => 'https://gw.tenpay.com/gateway/pay.htm?...'
 ```
 
@@ -79,7 +72,7 @@ read [Tenpay integration manual](http://help.tenpay.com/mch/) to get more option
 # The notify url MUST be set when generate payment url
 # IMPORTANT: Notify may reach earlier than callback
 def tenpay_notify
-  if JaslTenpay::Notify.verify?(params.except(*request.path_parameters.keys)) && callback_params[:trade_state] == '0'
+  if JaslTenpay::Notify.verify?(params.except(*request.path_parameters.keys), pid, jkey) && callback_params[:trade_state] == '0'
     # TODO: valid notify, code your business logic here.
   else
     # TODO: invalid, something went wrong, handle it.
